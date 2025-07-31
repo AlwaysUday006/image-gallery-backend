@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-mongoose.connect("mongodb://localhost:27017/imageGallery")
+mongodb+srv://AlwaysUday006:tim3M@chin3@mygallerycluster.goplvwq.mongodb.net/?retryWrites=true&w=majority&appName=MyGalleryCluster
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.log(err));
 
