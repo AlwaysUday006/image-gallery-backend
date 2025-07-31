@@ -9,10 +9,12 @@ app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-mongodb+srv://AlwaysUday006:tim3M@chin3@mygallerycluster.goplvwq.mongodb.net/?retryWrites=true&w=majority&appName=MyGalleryCluster
+// 1. MongoDB Connection
+mongoose.connect("mongodb+srv://AlwaysUday006:tim3M@chin3@mygallerycluster.goplvwq.mongodb.net/?retryWrites=true&w=majority&appName=MyGalleryCluster")
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.log(err));
 
+// 2. Schema and Model
 const imageSchema = new mongoose.Schema({
   name: String,
   imageUrl: String,
@@ -20,12 +22,14 @@ const imageSchema = new mongoose.Schema({
 });
 const Image = mongoose.model("Image", imageSchema);
 
+// 3. Multer Storage
 const storage = multer.diskStorage({
   destination: "./uploads/",
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
 const upload = multer({ storage });
 
+// 4. Routes
 app.get("/", (req, res) => res.send("Backend running!"));
 
 app.post("/upload", upload.single("image"), async (req, res) => {
@@ -42,4 +46,5 @@ app.get("/images", async (req, res) => {
   res.json(images);
 });
 
+// 5. Listen on Port
 app.listen(5000, () => console.log("🚀 Server running on http://localhost:5000"));
